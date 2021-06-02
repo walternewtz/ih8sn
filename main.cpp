@@ -34,10 +34,17 @@ std::map<std::string, std::string> load_config() {
     return config;
 }
 
-int main(int argc __unused, char *argv[] __unused) {
+int main(int argc, char *argv[]) {
     if (__system_properties_init()) {
         return -1;
     }
+
+    if (argc != 2) {
+        return -1;
+    }
+
+    const auto is_init_stage = strcmp(argv[1], "init") == 0;
+    const auto is_boot_completed_stage = strcmp(argv[1], "boot_completed") == 0;
 
     const auto config = load_config();
     const auto build_fingerprint = config.find("BUILD_FINGERPRINT");
@@ -48,7 +55,7 @@ int main(int argc __unused, char *argv[] __unused) {
     const auto build_version_release = config.find("BUILD_VERSION_RELEASE");
     const auto debuggable = config.find("DEBUGGABLE");
 
-    if (build_fingerprint != config.end()) {
+    if (is_init_stage && build_fingerprint != config.end()) {
         for (const auto &prop : {
             "ro.bootimage.build.fingerprint",
             "ro.build.fingerprint",
@@ -62,7 +69,7 @@ int main(int argc __unused, char *argv[] __unused) {
         }
     }
 
-    if (build_tags != config.end()) {
+    if (is_init_stage && build_tags != config.end()) {
         for (const auto &prop : {
             "ro.build.tags",
             "ro.odm.build.tags",
@@ -75,7 +82,7 @@ int main(int argc __unused, char *argv[] __unused) {
         }
     }
 
-    if (build_type != config.end()) {
+    if (is_init_stage && build_type != config.end()) {
         for (const auto &prop : {
             "ro.build.type",
             "ro.odm.build.type",
@@ -88,7 +95,7 @@ int main(int argc __unused, char *argv[] __unused) {
         }
     }
 
-    if (build_version_release != config.end()) {
+    if (is_boot_completed_stage && build_version_release != config.end()) {
         for (const auto &prop : {
             "ro.build.version.release",
             "ro.odm.build.version.release",
@@ -100,16 +107,16 @@ int main(int argc __unused, char *argv[] __unused) {
         }
     }
 
-    if (build_description != config.end()) {
+    if (is_init_stage && build_description != config.end()) {
         property_override("ro.build.description", build_description->second.c_str());
     }
 
-    if (build_security_patch_date != config.end()) {
+    if (is_boot_completed_stage && build_security_patch_date != config.end()) {
         property_override("ro.build.version.security_patch",
                 build_security_patch_date->second.c_str());
     }
 
-    if (debuggable != config.end()) {
+    if (is_init_stage && debuggable != config.end()) {
         property_override("ro.debuggable", debuggable->second.c_str());
     }
 
