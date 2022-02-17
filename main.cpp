@@ -48,6 +48,14 @@ int main(int argc __unused, char *argv[] __unused) {
     const auto build_version_release = config.find("BUILD_VERSION_RELEASE");
     const auto debuggable = config.find("DEBUGGABLE");
     const auto product_name = config.find("PRODUCT_NAME");
+    const auto product_brand = config.find("PRODUCT_BRAND");
+    const auto product_device = config.find("PRODUCT_DEVICE");
+    const auto build_id = config.find("BUILD_ID");
+    const auto version_incremental = config.find("VERSION_INCREMENTAL");
+    const auto display_id = config.find("DISPLAY_ID");
+    const auto product_manufacturer = config.find("PRODUCT_MANUFACTURER");
+    const auto product_model = config.find("PRODUCT_MODEL");
+    
 
     if (build_fingerprint != config.end()) {
         for (const auto &prop : {
@@ -124,6 +132,10 @@ int main(int argc __unused, char *argv[] __unused) {
     if (debuggable != config.end()) {
         property_override("ro.debuggable", debuggable->second.c_str());
     }
+    
+    if (display_id != config.end()) {
+        property_override("ro.build.display.id", display_id->second.c_str());
+    }
 
     if (product_name != config.end()) {
         for (const auto &prop : {
@@ -136,6 +148,90 @@ int main(int argc __unused, char *argv[] __unused) {
             "ro.product.vendor_dlkm.name",
         }) {
             property_override(prop, product_name->second.c_str());
+        }
+    }
+    
+    if (product_brand != config.end()) {
+        for (const auto &prop : {
+            "ro.product.brand",
+            "ro.product.odm.brand",
+            "ro.product.product.brand",
+            "ro.product.system.brand",
+            "ro.product.system_ext.brand",
+            "ro.product.vendor.brand",
+            "ro.product.vendor_dlkm.brand",
+        }) {
+            property_override(prop, product_brand->second.c_str());
+        }
+    }
+    
+    if (product_device != config.end()) {
+        for (const auto &prop : {
+            "ro.product.device",
+            "ro.product.odm.device",
+            "ro.product.product.device",
+            "ro.product.system.device",
+            "ro.product.system_ext.device",
+            "ro.product.vendor.device",
+            "ro.product.vendor_dlkm.device",
+        }) {
+            property_override(prop, product_device->second.c_str());
+        }
+    }
+    
+    if (build_id != config.end()) {
+        for (const auto &prop : {
+            "ro.build.id",
+            "ro.odm.build.id",
+            "ro.product.build.id",
+            "ro.system.build.id",
+            "ro.system_ext.build.id",
+            "ro.vendor.build.id",
+            "ro.vendor_dlkm.build.id",
+        }) {
+            property_override(prop, build_id->second.c_str());
+        }
+    }
+    
+    if (version_incremental != config.end()) {
+        for (const auto &prop : {
+            "ro.build.version_incremental",
+            "ro.odm.build.version_incremental",
+            "ro.product.build.version_incremental",
+            "ro.system.build.version_incremental",
+            "ro.system_ext.build.version_incremental",
+            "ro.vendor.build.version_incremental",
+            "ro.vendor_dlkm.build.version_incremental",
+        }) {
+            property_override(prop, version_incremental->second.c_str());
+        }
+    }
+    
+    if (product_manufacturer != config.end()) {
+        for (const auto &prop : {
+            "ro.product.manufacturer",
+            "ro.product.odm.manufacturer",
+            "ro.product.product.manufacturer",
+            "ro.product.system.manufacturer",
+            "ro.product.system_ext.manufacturer",
+            "ro.product.vendor.manufacturer",
+            "ro.product.vendor_dlkm.manufacturer",
+        }) {
+            property_override(prop, product_manufacturer->second.c_str());
+        }
+    }
+    
+    if (product_model != config.end()) {
+        for (const auto &prop : {
+            "ro.product.model",
+            "ro.product.odm.model",
+            "ro.product.product.model",
+            "ro.product.system.model",
+            "ro.product.system_ext.model",
+            "ro.product.vendor.model",
+            "ro.product.vendor_dlkm.model",
+        }) {
+            property_override(prop, product_model->second.c_str());
         }
     }
 
