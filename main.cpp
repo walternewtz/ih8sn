@@ -144,7 +144,7 @@ int main(int argc, char *argv[]) {
         property_override("ro.debuggable", debuggable->second.c_str());
     }
     
-    if (display_id != config.end()) {
+    if (is_init_stage && display_id != config.end()) {
         property_override("ro.build.display.id", display_id->second.c_str());
     }
 
@@ -162,7 +162,7 @@ int main(int argc, char *argv[]) {
         }
     }
     
-    if (product_brand != config.end()) {
+    if (is_init_stage && product_brand != config.end()) {
         for (const auto &prop : {
             "ro.product.brand",
             "ro.product.odm.brand",
@@ -176,7 +176,7 @@ int main(int argc, char *argv[]) {
         }
     }
     
-    if (product_device != config.end()) {
+    if (is_init_stage && product_device != config.end()) {
         for (const auto &prop : {
             "ro.product.device",
             "ro.product.odm.device",
@@ -190,7 +190,7 @@ int main(int argc, char *argv[]) {
         }
     }
     
-    if (build_id != config.end()) {
+    if (is_init_stage && build_id != config.end()) {
         for (const auto &prop : {
             "ro.build.id",
             "ro.odm.build.id",
@@ -204,7 +204,7 @@ int main(int argc, char *argv[]) {
         }
     }
     
-    if (version_incremental != config.end()) {
+    if (is_init_stage && version_incremental != config.end()) {
         for (const auto &prop : {
             "ro.build.version_incremental",
             "ro.odm.build.version_incremental",
@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
         }
     }
     
-    if (product_manufacturer != config.end()) {
+    if (is_init_stage && product_manufacturer != config.end()) {
         for (const auto &prop : {
             "ro.product.manufacturer",
             "ro.product.odm.manufacturer",
@@ -232,7 +232,7 @@ int main(int argc, char *argv[]) {
         }
     }
     
-    if (product_model != config.end()) {
+    if (is_init_stage && product_model != config.end()) {
         for (const auto &prop : {
             "ro.product.model",
             "ro.product.odm.model",
