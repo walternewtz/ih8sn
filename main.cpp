@@ -34,10 +34,17 @@ std::map<std::string, std::string> load_config() {
     return config;
 }
 
-int main(int argc __unused, char *argv[] __unused) {
+int main(int argc, char *argv[]) {
     if (__system_properties_init()) {
         return -1;
     }
+
+    if (argc != 2) {
+        return -1;
+    }
+
+    const auto is_init_stage = strcmp(argv[1], "init") == 0;
+    const auto is_boot_completed_stage = strcmp(argv[1], "boot_completed") == 0;
 
     const auto config = load_config();
     const auto build_fingerprint = config.find("BUILD_FINGERPRINT");
@@ -57,7 +64,7 @@ int main(int argc __unused, char *argv[] __unused) {
     const auto product_model = config.find("PRODUCT_MODEL");
     
 
-    if (build_fingerprint != config.end()) {
+    if (is_init_stage && build_fingerprint != config.end()) {
         for (const auto &prop : {
             "ro.bootimage.build.fingerprint",
             "ro.build.fingerprint",
@@ -72,8 +79,9 @@ int main(int argc __unused, char *argv[] __unused) {
         }
     }
 
-    if (build_tags != config.end()) {
+    if (is_init_stage && build_tags != config.end()) {
         for (const auto &prop : {
+            "ro.bootimage.build.tags",
             "ro.build.tags",
             "ro.odm.build.tags",
             "ro.product.build.tags",
@@ -86,8 +94,9 @@ int main(int argc __unused, char *argv[] __unused) {
         }
     }
 
-    if (build_type != config.end()) {
+    if (is_init_stage && build_type != config.end()) {
         for (const auto &prop : {
+            "ro.bootimage.build.type",
             "ro.build.type",
             "ro.odm.build.type",
             "ro.product.build.type",
@@ -100,14 +109,16 @@ int main(int argc __unused, char *argv[] __unused) {
         }
     }
 
-    if (build_version_release != config.end()) {
+    if (is_boot_completed_stage && build_version_release != config.end()) {
         for (const auto &prop : {
+            "ro.bootimage.build.version.release",
             "ro.build.version.release",
             "ro.odm.build.version.release",
             "ro.product.build.version.release",
             "ro.system.build.version.release",
             "ro.system_ext.build.version.release",
             "ro.vendor.build.version.release",
+            "ro.bootimage.build.version.release_or_codename",
             "ro.build.version.release_or_codename",
             "ro.odm.build.version.release_or_codename",
             "ro.product.build.version.release_or_codename",
@@ -120,16 +131,16 @@ int main(int argc __unused, char *argv[] __unused) {
         }
     }
 
-    if (build_description != config.end()) {
+    if (is_init_stage && build_description != config.end()) {
         property_override("ro.build.description", build_description->second.c_str());
     }
 
-    if (build_security_patch_date != config.end()) {
+    if (is_boot_completed_stage && build_security_patch_date != config.end()) {
         property_override("ro.build.version.security_patch",
                 build_security_patch_date->second.c_str());
     }
 
-    if (debuggable != config.end()) {
+    if (is_init_stage && debuggable != config.end()) {
         property_override("ro.debuggable", debuggable->second.c_str());
     }
     
@@ -137,7 +148,7 @@ int main(int argc __unused, char *argv[] __unused) {
         property_override("ro.build.display.id", display_id->second.c_str());
     }
 
-    if (product_name != config.end()) {
+    if (is_init_stage && product_name != config.end()) {
         for (const auto &prop : {
             "ro.product.name",
             "ro.product.odm.name",
