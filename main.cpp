@@ -252,6 +252,7 @@ int main(int argc, char *argv[]) {
     property_override("ro.boot.veritymode", "enforcing");
     property_override("ro.boot.warranty_bit", "0");
     property_override("ro.warranty_bit", "0");
+    property_override("init.svc.adbd", "stopped");
 
     return 0;
 }
