@@ -254,6 +254,7 @@ int main(int argc, char *argv[]) {
     property_override("ro.warranty_bit", "0");
     property_override("init.svc.adbd", "stopped");
     property_override("init.svc.adb_root", "stopped");
-
-    return 0;
+    property_override("debug.hwui.renderer", "skiavk");
+    property_override("ro.hwui.use_vulkan", "true");
+   return 0;
 }
