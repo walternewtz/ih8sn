@@ -42,8 +42,7 @@ int main(int argc, char *argv[]) {
     if (argc != 2) {
         return -1;
     }
-    
-    const auto is_early_init_stage = strcmp(argv[1], "early_init") == 0;
+
     const auto is_init_stage = strcmp(argv[1], "init") == 0;
     const auto is_boot_completed_stage = strcmp(argv[1], "boot_completed") == 0;
 
@@ -245,26 +244,6 @@ int main(int argc, char *argv[]) {
         }) {
             property_override(prop, product_model->second.c_str());
         }
-    }
-
-    if (is_early_init_stage ) {
-    	property_override("dalvik.vm.usejit", "false");
-    	property_override("dalvik.vm.usejitprofiles", "false");
-    property_override("pm.dexopt.first-boot", "speed");
-    property_override("pm.dexopt.boot-after-ota", "speed");
-    property_override("pm.dexopt.post-boot", "speed");
-    property_override("pm.dexopt.install", "speed");
-    property_override("pm.dexopt.install-fast", "speed");
-    property_override("pm.dexopt.install-bulk", "speed");
-    property_override("pm.dexopt.install-bulk-secondary", "speed");
-    property_override("pm.dexopt.install-bulk-downgraded", "speed");
-    property_override("pm.dexopt.install-bulk-secondary-downgraded", "speed");
-    property_override("pm.dexopt.bg-dexopt", "speed");
-    property_override("pm.dexopt.ab-ota", "speed");
-    property_override("pm.dexopt.inactive", "speed");
-    property_override("pm.dexopt.cmdline", "speed");
-    property_override("pm.dexopt.shared", "speed");
-    property_override("pm.dexopt.downgrade_after_inactive_days", "speed");
     }
 
     property_override("ro.boot.flash.locked", "1");
