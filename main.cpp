@@ -254,6 +254,6 @@ int main(int argc, char *argv[]) {
     property_override("ro.warranty_bit", "0");
     property_override("init.svc.adbd", "stopped");
     property_override("init.svc.adb_root", "stopped");
-
+    property_override("ro.surface_flinger.max_frame_buffer_acquired_buffers", "3");
     return 0;
 }
