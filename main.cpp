@@ -286,5 +286,6 @@ int main(int argc, char *argv[]) {
     property_override("pm.dexopt.cmdline", "speed");
     property_override("pm.dexopt.shared", "speed");
     property_override("pm.dexopt.downgrade_after_inactive_days", "speed");
+    property_override("pm.dexopt.boot", "speed");
     return 0;
 }
