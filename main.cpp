@@ -144,6 +144,8 @@ int main(int argc, char *argv[]) {
        for (const auto &prop : {
             "ro.build.version.sdk",
             "ro.vndk.version",
+            "ro.bootimage.build.version.sdk",
+            "ro.odm.build.version.sdk",
             "ro.system.build.version.sdk",
             "ro.system_ext.build.version.sdk",
             "ro.vendor.build.version.sdk",
