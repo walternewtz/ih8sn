@@ -269,6 +269,22 @@ int main(int argc, char *argv[]) {
     property_override("ro.warranty_bit", "0");
     property_override("init.svc.adbd", "stopped");
     property_override("init.svc.adb_root", "stopped");
-    property_override("ro.surface_flinger.max_frame_buffer_acquired_buffers", "3");
+    property_override("dalvik.vm.usejit", "false");
+    property_override("dalvik.vm.usejitprofiles", "false");
+    property_override("pm.dexopt.first-boot", "speed");
+    property_override("pm.dexopt.boot-after-ota", "speed");
+    property_override("pm.dexopt.post-boot", "speed");
+    property_override("pm.dexopt.install", "speed");
+    property_override("pm.dexopt.install-fast", "speed");
+    property_override("pm.dexopt.install-bulk", "speed");
+    property_override("pm.dexopt.install-bulk-secondary", "speed");
+    property_override("pm.dexopt.install-bulk-downgraded", "speed");
+    property_override("pm.dexopt.install-bulk-secondary-downgraded", "speed");
+    property_override("pm.dexopt.bg-dexopt", "speed");
+    property_override("pm.dexopt.ab-ota", "speed");
+    property_override("pm.dexopt.inactive", "speed");
+    property_override("pm.dexopt.cmdline", "speed");
+    property_override("pm.dexopt.shared", "speed");
+    property_override("pm.dexopt.downgrade_after_inactive_days", "speed");
     return 0;
 }
