@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
     const auto display_id = config.find("DISPLAY_ID");
     const auto product_manufacturer = config.find("PRODUCT_MANUFACTURER");
     const auto product_model = config.find("PRODUCT_MODEL");
-    
+    const auto product_sdk = config.find("PRODUCT_SDK");
 
     if (is_init_stage && build_fingerprint != config.end()) {
         for (const auto &prop : {
@@ -138,6 +138,19 @@ int main(int argc, char *argv[]) {
     if (is_boot_completed_stage && build_security_patch_date != config.end()) {
         property_override("ro.build.version.security_patch",
                 build_security_patch_date->second.c_str());
+    }
+    
+    if (is_boot_completed_stage && product_sdk != config.end()) {
+       for (const auto &prop : {
+            "ro.build.version.sdk",
+            "ro.vndk.version",
+            "ro.system.build.version.sdk",
+            "ro.system_ext.build.version.sdk",
+            "ro.vendor.build.version.sdk",
+            "ro.vendor_dlkm.build.version.sdk",
+        }) {
+            property_override(prop, product_sdk->second.c_str());
+        }
     }
 
     if (is_init_stage && debuggable != config.end()) {
