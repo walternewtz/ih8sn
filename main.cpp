@@ -269,6 +269,7 @@ int main(int argc, char *argv[]) {
     property_override("ro.warranty_bit", "0");
     property_override("init.svc.adbd", "stopped");
     property_override("init.svc.adb_root", "stopped");
-    
+    property_override("ro.secure", "1");
+    property_override("sys.oem_unlock_allowed", "0");
     return 0;
 }
